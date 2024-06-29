@@ -1,58 +1,58 @@
 ###LOCALHOST REQUESTS
 
-### Movies ###
+##################### Movies #####################
 
 ### Get all movies
 GET http://localhost:3000/movies
 
 ### Get a movie by id
-GET http://localhost:3000/movies/667dd40f27603bafcf631e13
+GET http://localhost:3000/movies/66803af4d195249fd1e5fba3
 
 ### Create a movie
 POST http://localhost:3000/movies
 Content-Type: application/json
 
     {
-        "title": "The Matrix",
+        "title": "The Matrix 12",
         "year": 1999,
         "director": "The Wachowskis",
-        "duration": 135,
+        "duration": "135",
         "poster": "https://image.tmdb.org/t/p/w500/2uNldM0v8l1ah5zS1ISq8w7e9v9.jpg",
         "rate": 8.5,
         "genre": ["Action", "Sci-Fi", "Thriller"]
     }
 
 ### Update a movie
-PUT http://localhost:3000/movies/667dd40f27603bafcf631e15
+PUT http://localhost:3000/movies/66803af4d195249fd1e5fba3
 Content-Type: application/json
 
     {
-        "title": "The Matrix III",
+        "title": "The Matrix III ???",
         "year": 2001,
         "director": "The Wachowskis",
-        "duration": 135,
+        "duration": "135 min",
         "poster": "https://image.tmdb.org/t/p/w500/2uNldM0v8l1ah5zS1ISq8w7e9v9.jpg",
-        "rate": 8.5,
+        "rate": 8,
         "genre": ["Action", "Sci-Fi", "Thriller"]
     }
 
 ### Delete a movie
-DELETE http://localhost:3000/movies/667dd40f27603bafcf631e15
+DELETE http://localhost:3000/movies/66803af4d195249fd1e5fba4
 
-### Books ###
+##################### Books ### #####################
 
 ### Get all books
 GET http://localhost:3000/books
 
 ### Get a book by id
-GET http://localhost:3000/books/667dce8927603bafcf631e01
+GET http://localhost:3000/books/668040da6225ea41e2674336
 
 ### Create a book
 POST http://localhost:3000/books
 Content-Type: application/json
 
     {
-        "title": "Test",
+        "title": "Test 6",
         "release_year": 1999,
         "number_of_pages": 135,
         "author": "Diego V",
@@ -61,17 +61,17 @@ Content-Type: application/json
     }
 
 ### Update a book
-PUT http://localhost:3000/books/667f28d326b59852074d808d
+PUT http://localhost:3000/books/668040da6225ea41e2674336
 Content-Type: application/json
 
     {
         "title": "Test Test",
         "release_year": 1999,
-        "number_of_pages": 135,
+        "number_of_pages": 145,
         "author": "Diego Vasquez",
         "genre": ["Action", "Science Fiction", "Thriller"],
         "book_cover": "https://m.media-amazon.com/images/I/51M7XGLQTBL._SY466_.jpg"
     }
 
 ### Delete a book
-DELETE http://localhost:3000/books/667f28d326b59852074d808d
+DELETE http://localhost:3000/books/668040da6225ea41e2674336

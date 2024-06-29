@@ -1,7 +1,8 @@
 const mongodb = require('../db/database');
 const ObjectId = require('mongodb').ObjectId;
+const createError = require('http-errors');
 
-const getAllBooks = async (req, res) => {
+const getAllBooks = async (req, res, next) => {
   //#swagger.tags = ['Books'];
   try {
     const books = await mongodb.getDb().db().collection('books').find({}).toArray();
@@ -9,16 +10,16 @@ const getAllBooks = async (req, res) => {
     res.status(200).json(books);
   } catch (error) {
     console.log(error);
-    res.status(500).json({ message: 'Error retrieving books' });
+    next(error);
   }
 };
 
-const getBookById = async (req, res) => {
+const getBookById = async (req, res, next) => {
   //#swagger.tags = ['Books'];
   try {
     const bookId = req.params.id;
     if (!ObjectId.isValid(bookId)) {
-      res.status(400).json({ message: 'Invalid book id' });
+      throw createError(400, 'Invalid book id');
     }
 
     const book = await mongodb
@@ -28,18 +29,18 @@ const getBookById = async (req, res) => {
       .findOne({ _id: ObjectId.createFromHexString(bookId) });
 
     if (!book) {
-      res.status(404).json({ message: 'book not found' });
+      throw createError(404, 'book not found');
     } else {
       res.setHeader('Content-Type', 'application/json');
       res.status(200).json(book);
     }
   } catch (error) {
     console.log(error);
-    res.status(500).json({ message: 'Error retrieving book' });
+    next(error);
   }
 };
 
-const createBook = async (req, res) => {
+const createBook = async (req, res, next) => {
   //#swagger.tags = ['Books']
   try {
     const { title, release_year, number_of_pages, author, genre, book_cover } = req.body;
@@ -53,21 +54,25 @@ const createBook = async (req, res) => {
       book_cover: book_cover
     });
 
-    res.setHeader('Content-Type', 'application/json');
-    res.status(201).json();
+    if (result.acknowledged) {
+      res.setHeader('Content-Type', 'application/json');
+      res.status(201).json();
+    } else {
+      throw createError(500, 'Error creating book');
+    }
   } catch (error) {
     console.log(error);
-    res.status(500).json();
+    next(error);
   }
 };
 
-const updateBook = async (req, res) => {
+const updateBook = async (req, res, next) => {
   //#swagger.tags = ['Books']
   try {
     const { title, release_year, number_of_pages, author, genre, book_cover } = req.body;
     const bookId = req.params.id;
     if (!ObjectId.isValid(bookId)) {
-      res.status(400).json({ message: 'Invalid book id' });
+      throw createError(400, 'Invalid book id');
     }
 
     // eslint-disable-next-line no-unused-vars
@@ -91,20 +96,25 @@ const updateBook = async (req, res) => {
         }
       );
 
+    if (result.matchedCount === 0) {
+      console.log(result);
+      throw createError(404, 'Book not found');
+    }
+
     res.setHeader('Content-Type', 'application/json');
     res.status(204).json();
   } catch (error) {
     console.log(error);
-    res.status(500).json();
+    next(error);
   }
 };
 
-const deleteBook = async (req, res) => {
+const deleteBook = async (req, res, next) => {
   //#swagger.tags = ['Books']
   try {
     const bookId = req.params.id;
     if (!ObjectId.isValid(bookId)) {
-      res.status(400).json({ message: 'Invalid book id' });
+      throw createError(400, 'Invalid book id');
     }
 
     const result = await mongodb
@@ -115,11 +125,13 @@ const deleteBook = async (req, res) => {
         _id: ObjectId.createFromHexString(bookId)
       });
 
+    if (result.deletedCount === 0) {
+      throw createError(404, 'Book not found');
+    }
     res.setHeader('Content-Type', 'application/json');
-    res.status(204).json(result);
+    res.status(204).json();
   } catch (error) {
-    console.log(error);
-    res.status(500).json();
+    next(error);
   }
 };
 
