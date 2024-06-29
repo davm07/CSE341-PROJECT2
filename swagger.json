@@ -5,10 +5,9 @@
     "version": "1.0.0",
     "description": "API for movies and books"
   },
-  "host": "localhost:3000",
+  "host": "cse341-project2-556z.onrender.com",
   "basePath": "/",
   "schemes": [
-    "http",
     "https"
   ],
   "paths": {
