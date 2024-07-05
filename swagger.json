@@ -8,7 +8,7 @@
   "host": "cse341-project2-556z.onrender.com",
   "basePath": "/",
   "schemes": [
-    "http"
+    "https"
   ],
   "securityDefinitions": {
     "Movies_Books_auth": {
