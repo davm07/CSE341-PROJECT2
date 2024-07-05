@@ -3,13 +3,20 @@
   "info": {
     "title": "Movies and Books API",
     "version": "1.0.0",
-    "description": "API for movies and books"
+    "description": "API for movies and books, if you want to use the protected endpoints you need to login first, you can do it by going to the base url /login, or you can click on the authorization button on the swagger page and then click on authorize, if you want to logout you can go to base url + /logout"
   },
   "host": "cse341-project2-556z.onrender.com",
   "basePath": "/",
   "schemes": [
-    "https"
+    "http"
   ],
+  "securityDefinitions": {
+    "Movies_Books_auth": {
+      "type": "oauth2",
+      "flow": "accessCode",
+      "authorizationUrl": "https://cse341-project2-556z.onrender.com/login"
+    }
+  },
   "paths": {
     "/movies/": {
       "get": {
@@ -36,6 +43,13 @@
         }
       },
       "post": {
+        "security": [
+          {
+            "Movies_Books_auth": [
+              "write"
+            ]
+          }
+        ],
         "tags": [
           "Movies"
         ],
@@ -55,6 +69,12 @@
         "responses": {
           "201": {
             "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "422": {
+            "description": "Unprocessable Entity"
           },
           "500": {
             "description": "Internal Server Error"
@@ -100,6 +120,13 @@
         }
       },
       "put": {
+        "security": [
+          {
+            "Movies_Books_auth": [
+              "write"
+            ]
+          }
+        ],
         "tags": [
           "Movies"
         ],
@@ -129,12 +156,25 @@
           "400": {
             "description": "Bad Request"
           },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "422": {
+            "description": "Unprocessable Entity"
+          },
           "500": {
             "description": "Internal Server Error"
           }
         }
       },
       "delete": {
+        "security": [
+          {
+            "Movies_Books_auth": [
+              "write"
+            ]
+          }
+        ],
         "tags": [
           "Movies"
         ],
@@ -156,6 +196,9 @@
           },
           "400": {
             "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
           },
           "500": {
             "description": "Internal Server Error"
@@ -188,6 +231,13 @@
         }
       },
       "post": {
+        "security": [
+          {
+            "Movies_Books_auth": [
+              "write"
+            ]
+          }
+        ],
         "tags": [
           "Books"
         ],
@@ -207,6 +257,12 @@
         "responses": {
           "201": {
             "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "422": {
+            "description": "Unprocessable Entity"
           },
           "500": {
             "description": "Internal Server Error"
@@ -252,6 +308,13 @@
         }
       },
       "put": {
+        "security": [
+          {
+            "Movies_Books_auth": [
+              "write"
+            ]
+          }
+        ],
         "tags": [
           "Books"
         ],
@@ -281,12 +344,25 @@
           "400": {
             "description": "Bad Request"
           },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "422": {
+            "description": "Unprocessable Entity"
+          },
           "500": {
             "description": "Internal Server Error"
           }
         }
       },
       "delete": {
+        "security": [
+          {
+            "Movies_Books_auth": [
+              "write"
+            ]
+          }
+        ],
         "tags": [
           "Books"
         ],
@@ -308,6 +384,9 @@
           },
           "400": {
             "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
           },
           "500": {
             "description": "Internal Server Error"
